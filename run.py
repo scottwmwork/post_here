@@ -7,21 +7,20 @@ from dash.dependencies import Input, Output
 
 # Imports from this application
 from app import app, server
-from pages import index, build, compare, about, entryLevel, midLevel, theologian
+from pages import about, index
 
 
 navbar = dbc.NavbarSimple(
     
-    brand='Build A Library',
+    brand='Post Here',
     brand_href='/', 
     children=[
-        dbc.Col(html.Img(src=img, height="30px")),
         dbc.NavItem(dcc.Link('About', href='/about', className='nav-link'))
     ],
     sticky='top',
     color='dark', 
     light=False, 
-    dark=False
+    dark=True
 )
 
 footer = dbc.Container(
@@ -29,7 +28,6 @@ footer = dbc.Container(
         dbc.Col(
             html.P(
                 [
-                    html.Span('Scott Maxwell ', className='mr-2'),  
                     html.A(html.I(className='fab fa-github-square mr-1'), href='https://github.com/scottwmwork'), 
                     html.A(html.I(className='fab fa-linkedin mr-1'), href='https://www.linkedin.com/in/scott-maxwell-415171142/')
                 ], 
@@ -43,6 +41,7 @@ footer = dbc.Container(
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False), 
     navbar, 
+    footer,
     dbc.Container(id='page-content', className='mt-4'), 
     html.Hr()
 ])
