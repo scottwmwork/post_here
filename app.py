@@ -29,7 +29,7 @@ dbc.themes.YETI
 """
 
 external_stylesheets = [
-    dbc.themes.DARKLY, # Bootswatch theme
+    dbc.themes.COSMO, # Bootswatch theme
 ]
 
 meta_tags=[
