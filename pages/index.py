@@ -3,7 +3,7 @@ import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
-
+import pickle
 
 from app import app
 
@@ -24,6 +24,11 @@ smaller size screens Bootstrap will allow the rows to wrap so as not to squash
 the content.
 """
 
+# Loading the scikit Learn models with Pickle
+filename = 'assets/nlp_model.plk'
+model_pkl = open(filename, 'rb')
+model = pickle.load(model_pkl)
+
 column1 = dbc.Col(
     [
 
@@ -35,17 +40,28 @@ column2 = dbc.Col(
         dcc.Markdown(
             """
         
-            ## 
-            Pick a category
+            ## Enter your post's title here:
            
             """
         ),
 
-        # First main categories
-        dcc.Link(dbc.Button('about', color='primary'), href='/about'),
+        dbc.Input(
+            id = 'input',placeholder="Post text...", bs_size="lg", className="mb-3"
+        ),
+        dcc.Markdown(""" You should post in: """),
+        html.P(id = 'output')
     ],
     md=5,
 )
+
+
+
+@app.callback(Output("output", "children"), [Input("input", "value")])
+def output_text(value):
+    if value == '':
+        return ''
+    else:
+        return 'r/{}'.format(str(model.predict([value])[0]))
 
 
 column3 = dbc.Col(
